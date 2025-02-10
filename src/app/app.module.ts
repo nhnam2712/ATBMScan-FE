@@ -11,29 +11,22 @@ import { BookingListComponent } from './pages/booking-list/booking-list.componen
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 
-import { HttpClientModule } from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { RegisterComponent } from './pages/register/register.component';
 
-@NgModule({
-  declarations: [
-    AppComponent,
-    LoginComponent,
-    LayoutComponent,
-    UsersComponent,
-    NewBookingComponent,
-    BookingListComponent,
-    DashboardComponent,
-    RegisterComponent,
-  ],
-  imports: [
-    FormsModule,
-    BrowserModule,
-    AppRoutingModule,
-    FormsModule,
-    HttpClientModule,
-    ReactiveFormsModule
-  ],
-  providers: [],
-  bootstrap: [AppComponent]
-})
+@NgModule({ declarations: [
+        AppComponent,
+        LoginComponent,
+        LayoutComponent,
+        UsersComponent,
+        NewBookingComponent,
+        BookingListComponent,
+        DashboardComponent,
+        RegisterComponent,
+    ],
+    bootstrap: [AppComponent], imports: [FormsModule,
+        BrowserModule,
+        AppRoutingModule,
+        FormsModule,
+        ReactiveFormsModule], providers: [provideHttpClient(withInterceptorsFromDi())] })
 export class AppModule { }
