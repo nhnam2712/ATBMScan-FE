@@ -2,9 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { RoomService } from 'src/app/service/room.service';
 
 @Component({
-  selector: 'app-booking-list',
-  templateUrl: './booking-list.component.html',
-  styleUrls: ['./booking-list.component.css'],
+    selector: 'app-booking-list',
+    templateUrl: './booking-list.component.html',
+    styleUrls: ['./booking-list.component.css'],
+    standalone: false
 })
 export class BookingListComponent implements OnInit {
   bookings: any[] = [];

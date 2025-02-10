@@ -3,9 +3,10 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { RoomService } from 'src/app/service/room.service';
 
 @Component({
-  selector: 'app-new-booking',
-  templateUrl: './new-booking.component.html',
-  styleUrls: ['./new-booking.component.css']
+    selector: 'app-new-booking',
+    templateUrl: './new-booking.component.html',
+    styleUrls: ['./new-booking.component.css'],
+    standalone: false
 })
 export class NewBookingComponent {
   bookingForm: FormGroup;
