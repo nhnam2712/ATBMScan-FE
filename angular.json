@@ -54,7 +54,7 @@
               "extractLicenses": false,
               "sourceMap": true,
               "namedChunks": true
-              
+
             }
           },
           "defaultConfiguration": "production"
@@ -92,10 +92,15 @@
             "styles": [
               "src/styles.css"
             ],
-            "scripts": []
+            "scripts": [
+              "node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"
+            ]
           }
         }
       }
     }
+  },
+  "cli": {
+    "analytics": "57543c90-3f0c-4d8d-a72d-403efb6eea66"
   }
 }

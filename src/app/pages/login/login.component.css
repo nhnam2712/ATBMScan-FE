@@ -1,109 +1,119 @@
-@import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@300&display=swap");
- 
+/* General styles */
+body {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /* Fullscreen height */
+  background: linear-gradient(135deg, #1d1d1d, #3b3b3b);
+  font-family: Arial, sans-serif;
+}
+
 .parent {
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 100vh;
-  background: #111;
   width: 100%;
-  overflow: hidden;
-}
-.ring {
-  position: relative;
-  width: 500px;
-  height: 500px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-.ring i {
-  position: absolute;
-  inset: 0;
-  border: 2px solid #fff;
-  transition: 0.5s;
-}
-.ring i:nth-child(1) {
-  border-radius: 38% 62% 63% 37% / 41% 44% 56% 59%;
-  animation: animate 6s linear infinite;
-}
-.ring i:nth-child(2) {
-  border-radius: 41% 44% 56% 59%/38% 62% 63% 37%;
-  animation: animate 4s linear infinite;
-}
-.ring i:nth-child(3) {
-  border-radius: 41% 44% 56% 59%/38% 62% 63% 37%;
-  animation: animate2 10s linear infinite;
-}
-.ring:hover i {
-  border: 6px solid var(--clr);
-  filter: drop-shadow(0 0 20px var(--clr));
-}
-@keyframes animate {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
-}
-@keyframes animate2 {
-  0% {
-    transform: rotate(360deg);
-  }
-  100% {
-    transform: rotate(0deg);
-  }
-}
-.login {
-  position: absolute;
-  width: 300px;
   height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  gap: 20px;
+  padding-top: 200px /* Adjust this value to set the space from the top */
 }
+
+/* Login box styles */
+.login {
+  position: relative;
+  padding: 30px;
+  width: 100%;
+  max-width: 350px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+  text-align: center;
+  backdrop-filter: blur(10px);
+}
+
 .login h2 {
-  font-size: 2em;
-  color: #fff;
+  color: #000;
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 20px;
 }
-.login .inputBx {
-  position: relative;
-  width: 100%;
+
+.inputBx {
+  margin-bottom: 20px;
 }
-.login .inputBx input {
-  position: relative;
+
+.inputBx input {
   width: 100%;
-  padding: 12px 20px;
-  background: transparent;
-  border: 2px solid #fff;
-  border-radius: 40px;
-  font-size: 1.2em;
-  color: #fff;
-  box-shadow: none;
-  outline: none;
-}
-.login .inputBx input[type="submit"] {
-  width: 100%;
-  background: #0078ff;
-  background: linear-gradient(45deg, #ff357a, #fff172);
+  padding: 12px 15px;
   border: none;
-  cursor: pointer;
+  outline: none;
+  border-radius: 5px;
+  font-size: 16px;
+  background: rgba(255, 255, 255, 0.2);
+  color: #000;
+  transition: background 0.3s ease, border 0.3s ease;
 }
-.login .inputBx input::placeholder {
-  color: rgba(255, 255, 255, 0.75);
+
+.inputBx input::placeholder {
+  color: #c0c0c0;
 }
-.login .links {
-  position: relative;
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 20px;
+
+.inputBx input:focus {
+  border: 2px solid #0078ff;
+  background: rgba(255, 255, 255, 0.3);
 }
-.login .links a {
+
+.inputBx input[type="button"] {
+  background: linear-gradient(135deg, #0078ff, #5a55c3);
   color: #fff;
+  cursor: pointer;
+  font-weight: bold;
+  transition: transform 0.2s ease, filter 0.3s ease;
+}
+
+.inputBx input[type="button"]:hover {
+  filter: brightness(1.2);
+}
+
+.inputBx input[type="button"]:active {
+  transform: scale(0.97);
+  filter: brightness(1.1);
+}
+
+.links {
+  margin-top: 15px;
+}
+
+.links a {
+  color: #0078ff;
   text-decoration: none;
+  margin: 0 10px;
+  font-size: 14px;
+  transition: color 0.3s ease;
+}
+
+.links a:hover {
+  color: #7f9eff;
+}
+
+/* Responsive design */
+@media (max-width: 480px) {
+  .login {
+    padding: 20px;
+    width: 90%;
+    box-shadow: none;
+  }
+
+  .login h2 {
+    font-size: 20px;
+  }
+
+  .inputBx input {
+    font-size: 14px;
+  }
+
+  .links a {
+    font-size: 12px;
+  }
 }

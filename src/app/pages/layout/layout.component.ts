@@ -9,16 +9,23 @@ import { Router } from '@angular/router';
 export class LayoutComponent {
 
   loggedUserData: any;
-  constructor(private router: Router) {
-    const localData = localStorage.getItem('hotelUser');
-    if(localData != null) {
-      this.loggedUserData = JSON.parse(localData);
-    }
+  isAdmin = false;
+
+  constructor(private router: Router) {}
+
+  ngOnInit() {
+    // Retrieve user role from localStorage
+    const userRole = localStorage.getItem('role');
+
+    // Check if the user is an Admin
+    this.isAdmin = userRole === 'ADMIN';
+
+    // Get logged user data (if available)
+    this.loggedUserData.userName = localStorage.getItem('userName');
   }
 
   onLogoff() {
-    localStorage.removeItem('hotelUser');
-    this.loggedUserData = undefined;
+    localStorage.clear();
     this.router.navigateByUrl('/login')
   }
 }

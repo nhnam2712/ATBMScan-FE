@@ -1,15 +1,13 @@
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router'; 
+import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './pages/login/login.component';
 import { LayoutComponent } from './pages/layout/layout.component';
-import { RoomsComponent } from './pages/rooms/rooms.component';
 import { NewBookingComponent } from './pages/new-booking/new-booking.component';
 import { BookingListComponent } from './pages/booking-list/booking-list.component';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
-import { BookingCalenderComponent } from './pages/booking-calender/booking-calender.component';
-import { CustomerComponent } from './pages/customer/customer.component';
 import { UsersComponent } from './pages/users/users.component';
- 
+import { RegisterComponent } from './pages/register/register.component';
+
 
 const routes: Routes = [
   {
@@ -17,9 +15,14 @@ const routes: Routes = [
     redirectTo:'login',
     pathMatch:'full'
   },
+
   {
     path:'login',
     component:LoginComponent
+  },
+  {
+    path:'register',
+    component:RegisterComponent,
   },
   {
     path:'',
@@ -30,10 +33,6 @@ const routes: Routes = [
         component:DashboardComponent
       },
       {
-        path:'rooms',
-        component:RoomsComponent
-      },
-      {
         path:'newBooking',
         component:NewBookingComponent
       },
@@ -42,20 +41,12 @@ const routes: Routes = [
         component:BookingListComponent
       },
       {
-        path:'booking-calender',
-        component:BookingCalenderComponent
-      },
-      {
-        path:'customers',
-        component:CustomerComponent
-      } ,
-      {
         path:'users',
         component:UsersComponent
       }
     ]
   }
-   
+
 ];
 
 @NgModule({

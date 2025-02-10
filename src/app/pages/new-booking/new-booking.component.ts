@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { RoomService } from 'src/app/service/room.service';
 
 @Component({
@@ -6,69 +7,35 @@ import { RoomService } from 'src/app/service/room.service';
   templateUrl: './new-booking.component.html',
   styleUrls: ['./new-booking.component.css']
 })
-export class NewBookingComponent implements OnInit {
+export class NewBookingComponent {
+  bookingForm: FormGroup;
 
-  bookingObj: any  = {
-    "name": "",
-    "mobileNo": "",
-    "email": "",
-    "aadharNo": "",
-    "city": "",
-    "address": "",
-    "bookingId": 0,
-    "roomId": 0,
-    "customerId": 0,
-    "bookingFromDate": "",
-    "bookingToDate": "",
-    "createdDate": new Date(),
-    "bookingRate": 0,
-    "naration": "",
-    "createdBy": 0,
-    "hotelBookingDetails": [
-      
-    ]
-  };
-
-  guestObj: any = {
-    "bookingDetailId": 0,
-    "bookingId": 0,
-    "customerName": "",
-    "aadharCardNo": ""
-  }
-  roomList:any[]=[];
-
-  constructor(private roomSrv: RoomService) {
-
-  }
-  ngOnInit(): void {
-      this.loadRooms();
+  constructor(private fb: FormBuilder, private roomService: RoomService) {
+    this.bookingForm = this.fb.group({
+      userId: ['', [Validators.required]],
+      bookingDate: ['', [Validators.required]],
+      status: ['PENDING', [Validators.required]]
+    });
   }
 
-  loadRooms() {
-    this.roomSrv.getAllRooms().subscribe((res:any)=>{
-      this.roomList = res.data;
-    })
-  }
+  onSubmit() {
+    if (this.bookingForm.valid) {
+      const formData = this.bookingForm.value;
 
-  addGuest() {
-    const obj = JSON.stringify(this.guestObj);
-    const parserobj = JSON.parse(obj);
-    this.bookingObj.hotelBookingDetails.unshift(parserobj);
-  }
-
-  removeGuest(index:number) {
-    this.bookingObj.hotelBookingDetails.splice(index,1)
-  }
-
-  onSaveBooking() {
-    this.roomSrv.createBooking(this.bookingObj).subscribe((res: any) => {
-      if(res.result) {
-        alert('Booking Created')
-      } else {
-        alert(res.message)
-      }
-    })
+      // Call the service method to create a new booking
+      this.roomService.createBooking(formData).subscribe({
+        next: (response) => {
+          console.log('Booking created successfully:', response);
+          alert('Booking submitted successfully!');
+          this.bookingForm.reset(); // Optionally reset the form
+        },
+        error: (error) => {
+          console.error('Error creating booking:', error);
+          alert('Failed to create booking. Please try again.');
+        }
+      });
+    } else {
+      alert('Please fill out all required fields.');
+    }
   }
 }
-
-
