@@ -57,12 +57,14 @@ export class RoomService {
   }
 
   updateUser(id: any, user: any) {
-    const token = localStorage.getItem('token'); // Retrieve token from localStorage or another source
+    const token = localStorage.getItem('token'); // Retrieve token
+
     const headers = new HttpHeaders({
-      Authorization: `Bearer ${token}`
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json'  // ✅ Fix: Add Content-Type
     });
 
-    return this.http.put(`${this.apiEndPoint}users/${id}`,user, { headers });
+    return this.http.put(`${this.apiEndPoint}users/${id}`, JSON.stringify(user), { headers });
   }
 
   deleteUser(id: any) {

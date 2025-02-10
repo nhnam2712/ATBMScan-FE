@@ -2,20 +2,20 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { RoomService } from 'src/app/service/room.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import * as bootstrap from 'bootstrap';
 
 @Component({
-    selector: 'app-users',
-    templateUrl: './users.component.html',
-    styleUrls: ['./users.component.css'],
-    standalone: false
+  selector: 'app-users',
+  templateUrl: './users.component.html',
+  standalone: false,
+  styleUrls: ['./users.component.css']
 })
 export class UsersComponent implements OnInit {
-
   userList: any[] = [];
   updateUserForm: FormGroup;
   selectedUserId: number | null = null;
 
-  constructor(private fb: FormBuilder, private roomSrv: RoomService, private modalService: NgbModal) {
+  constructor(private roomSrv: RoomService, private fb: FormBuilder, private modalService: NgbModal) {
     this.updateUserForm = this.fb.group({
       role: ['', Validators.required]
     });
@@ -26,52 +26,58 @@ export class UsersComponent implements OnInit {
   }
 
   getUsers() {
-    this.roomSrv.getAllUsers().subscribe((Res: any) => {
-      this.userList = Res;
+    this.roomSrv.getAllUsers().subscribe((res: any) => {
+      this.userList = res;
     });
   }
 
-  // 🟢 OPEN MODAL
-  openModal(user: any) {
+  // Open Modal When Clicking "Edit Role" Button
+  onEditUser(user: any) {
     this.selectedUserId = user.id;
     this.updateUserForm.patchValue({ role: user.roles });
 
-    const modal = new (window as any).bootstrap.Modal(document.getElementById('editRoleModal'));
-    modal.show();
+    // Open the modal
+    const modalElement = document.getElementById('editRoleModal');
+    if (modalElement) {
+      const modal = new bootstrap.Modal(modalElement);
+      modal.show();
+    }
   }
 
-  // 🔄 UPDATE USER ROLE
+  // Save the Updated Role
   onUpdateUser() {
     if (!this.selectedUserId) return;
 
     const updatedRole = this.updateUserForm.value.role;
-    this.roomSrv.updateUserRole(this.selectedUserId, updatedRole).subscribe({
+
+    this.roomSrv.updateUser(this.selectedUserId, updatedRole).subscribe({
       next: () => {
-        alert('Role updated successfully!');
-        this.getUsers();
-        const modal = document.getElementById('editRoleModal');
-        if (modal) {
-          (window as any).bootstrap.Modal.getInstance(modal).hide();
-        }
+        alert('User role updated successfully!');
+        this.getUsers(); // Refresh user list
+        this.closeModal();
       },
-      error: (err) => {
-        console.error(err);
-        alert('Error updating role.');
+      error: (error) => {
+        console.error('Update failed:', error);
+        alert('Failed to update user role.');
       }
     });
   }
 
-  // ❌ DELETE USER
+  // Close the Modal
+  closeModal() {
+    const modalElement = document.getElementById('editRoleModal');
+    if (modalElement) {
+      const modal = bootstrap.Modal.getInstance(modalElement);
+      modal?.hide();
+    }
+  }
+
+  // Delete User
   onDelete(id: number) {
-    const isDelete = confirm('Are you sure you want to delete this user?');
-    if (isDelete) {
-      this.roomSrv.deleteUser(id).subscribe((res: any) => {
-        if (res.result) {
-          alert('User Deleted');
-          this.getUsers();
-        } else {
-          alert(res.message);
-        }
+    if (confirm('Are you sure you want to delete this user?')) {
+      this.roomSrv.deleteUser(id).subscribe(() => {
+        alert('User deleted successfully.');
+        this.getUsers();
       });
     }
   }
