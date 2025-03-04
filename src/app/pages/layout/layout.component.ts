@@ -10,6 +10,8 @@ import { Router } from '@angular/router';
 export class LayoutComponent {
 
   loggedUserData: any;
+  notifications = [ "New Booking", "Payment Received", "New User Signup" ];
+  showDropdown = false;
   isAdmin = false;
 
   constructor(private router: Router) {}
@@ -21,12 +23,16 @@ export class LayoutComponent {
     // Check if the user is an Admin
     this.isAdmin = userRole === 'ADMIN';
 
-    // Get logged user data (if available)
-    this.loggedUserData.userName = localStorage.getItem('userName');
+    // // Get logged user data (if available)
+    // this.loggedUserData.userName = localStorage.getItem('userName');
   }
 
   onLogoff() {
     localStorage.clear();
     this.router.navigateByUrl('/login')
+  }
+
+  clearNotifications() {
+    this.notifications = [];
   }
 }

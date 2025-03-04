@@ -7,8 +7,11 @@ import {Observable, throwError} from "rxjs";
 })
 export class RoomService {
 
+  selectedFile: File | null = null;
   apiEndPoint: string = "http://localhost:8080/api/"
-  constructor(private http: HttpClient) { }
+
+  constructor(private http: HttpClient) {
+  }
 
   login(obj: any) {
     return this.http.post(this.apiEndPoint + 'auth' + '/login', obj);
@@ -24,7 +27,7 @@ export class RoomService {
       Authorization: `Bearer ${token}`
     });
 
-    return this.http.get<any>(this.apiEndPoint + 'bookings/' + localStorage.getItem('userId'), { headers });
+    return this.http.get<any>(this.apiEndPoint + 'bookings/' + localStorage.getItem('userId'), {headers});
 
   }
 
@@ -34,20 +37,50 @@ export class RoomService {
       Authorization: `Bearer ${token}`
     });
 
-    return this.http.get<any>(this.apiEndPoint + 'bookings', { headers });
+    return this.http.get<any>(this.apiEndPoint + 'bookings', {headers});
 
   }
 
-  // getAllCustomers() {
-  //   const token = localStorage.getItem('token'); // Retrieve token from localStorage or another source
-  //   const headers = new HttpHeaders({
-  //     Authorization: `Bearer ${token}`
-  //   });
-  //
-  //   return this.http.get(this.apiEndPoint + 'users', { headers });
-  // }
+  getAllSoftwares() {
+    const token = localStorage.getItem('token'); // Retrieve token from localStorage or another source
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`
+    });
 
-  getAllUsers() {
+    return this.http.get<any>(this.apiEndPoint + 'software', {headers});
+  }
+
+  deleteSoftware(id: string): Observable<any> {
+    const token = localStorage.getItem('token'); // Retrieve token from localStorage or another source
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`
+    });
+
+    return this.http.delete(`${this.apiEndPoint}software/${id}`, {headers});
+  }
+
+  uploadSoftware(file: File, softwareData: any): Observable<any> {
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders({Authorization: `Bearer ${token}`});
+
+    const formData = new FormData();
+    formData.append('file', file); // ✅ Corrected: Backend expects a single file named "file"
+    formData.append('data', new Blob([JSON.stringify(softwareData)], {type: 'application/json'})); // ✅ Match backend "data"
+
+    return this.http.post(`${this.apiEndPoint}software`, formData, {headers});
+  }
+
+  downloadSoftware(filePath: string): Observable<Blob> {
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders({ Authorization: `Bearer ${token}` });
+
+    return this.http.get(`${this.apiEndPoint}software/download/${encodeURIComponent(filePath)}`, {
+      headers,
+      responseType: 'blob' // Important for file downloads
+    });
+  }
+
+getAllUsers() {
     const token = localStorage.getItem('token'); // Retrieve token from localStorage or another source
     const headers = new HttpHeaders({
       Authorization: `Bearer ${token}`

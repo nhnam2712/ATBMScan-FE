@@ -8,8 +8,12 @@
             aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
+
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/softwares">Softwares</a>
+        </li>
         <li class="nav-item">
           <a class="nav-link" routerLink="/newBooking">New Booking</a>
         </li>
@@ -21,9 +25,35 @@
         </li>
       </ul>
 
-      <div class="d-flex">
+      <div class="d-flex align-items-center">
+        <!-- Notification Dropdown -->
+        <div class="dropdown dropstart me-3" (mouseover)="showDropdown=true" (mouseleave)="showDropdown=false">
+          <button class="btn btn-re"
+                  type="button" style="outline: none; box-shadow: none;">
+            <i class="fas fa-bell text-white fs-5"></i>
+            <span *ngIf="notifications.length > 0"
+                  class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger shadow-sm">
+              {{ notifications.length }}
+            </span>
+          </button>
+
+          <!-- Notification Dropdown Menu -->
+          <ul class="dropdown-menu notification-dropdown" [ngClass]="{'show': showDropdown}">
+            <li *ngIf="notifications.length === 0" class="dropdown-item text-muted text-center">
+              No new notifications
+            </li>
+            <li *ngFor="let notification of notifications" class="dropdown-item">
+              <i class="fas fa-circle text-primary"></i> {{ notification }}
+            </li>
+            <li class="dropdown-divider"></li>
+            <li class="text-center">
+              <button class="btn btn-sm btn-outline-danger clear-btn" (click)="clearNotifications()">Clear All</button>
+            </li>
+          </ul>
+        </div>
+
         <h6 class="text-white me-3">{{ loggedUserData?.userName }}</h6>
-        <button class="btn btn-danger" type="button" (click)="onLogoff()">Logout</button>
+        <button class="btn btn-danger shadow-sm" type="button" (click)="onLogoff()">Logout</button>
       </div>
     </div>
   </div>

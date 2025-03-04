@@ -7,6 +7,7 @@ import { BookingListComponent } from './pages/booking-list/booking-list.componen
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { UsersComponent } from './pages/users/users.component';
 import { RegisterComponent } from './pages/register/register.component';
+import {SoftwaresComponent} from './pages/softwares/softwares.component';
 
 
 const routes: Routes = [
@@ -31,6 +32,10 @@ const routes: Routes = [
       {
         path:'dashboard',
         component:DashboardComponent
+      },
+      {
+        path:'softwares',
+        component:SoftwaresComponent
       },
       {
         path:'newBooking',

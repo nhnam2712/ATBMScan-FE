@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { CommonModule } from '@angular/common';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -13,6 +14,7 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { RegisterComponent } from './pages/register/register.component';
+import {SoftwaresComponent} from './pages/softwares/softwares.component';
 
 @NgModule({ declarations: [
         AppComponent,
@@ -23,10 +25,14 @@ import { RegisterComponent } from './pages/register/register.component';
         BookingListComponent,
         DashboardComponent,
         RegisterComponent,
+        SoftwaresComponent,
     ],
-    bootstrap: [AppComponent], imports: [FormsModule,
-        BrowserModule,
-        AppRoutingModule,
-        FormsModule,
-        ReactiveFormsModule], providers: [provideHttpClient(withInterceptorsFromDi())] })
+    bootstrap: [AppComponent],
+  imports: [FormsModule,
+    BrowserModule,
+    AppRoutingModule,
+    FormsModule,
+    ReactiveFormsModule,
+    CommonModule],
+  providers: [provideHttpClient(withInterceptorsFromDi())] })
 export class AppModule { }

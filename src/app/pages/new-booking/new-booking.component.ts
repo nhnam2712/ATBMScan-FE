@@ -12,8 +12,10 @@ export class NewBookingComponent {
   bookingForm: FormGroup;
 
   constructor(private fb: FormBuilder, private roomService: RoomService) {
+    const storedUserId = localStorage.getItem('userId');
+
     this.bookingForm = this.fb.group({
-      userId: ['', [Validators.required]],
+      userId: [{ value: storedUserId, disabled: true }, Validators.required],
       bookingDate: ['', [Validators.required]],
       status: ['PENDING', [Validators.required]]
     });
@@ -21,7 +23,7 @@ export class NewBookingComponent {
 
   onSubmit() {
     if (this.bookingForm.valid) {
-      const formData = this.bookingForm.value;
+      const formData = this.bookingForm.getRawValue();
 
       // Call the service method to create a new booking
       this.roomService.createBooking(formData).subscribe({
