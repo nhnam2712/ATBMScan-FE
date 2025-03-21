@@ -1,0 +1,116 @@
+<div class="container mt-4">
+  <h3>Booking Scan Result</h3>
+
+  <div *ngIf="isLoading" class="text-center mt-3">
+    <p>Loading booking details...</p>
+  </div>
+
+  <div *ngIf="errorMessage" class="text-danger text-center mt-3">
+    <p>{{ errorMessage }}</p>
+  </div>
+
+  <div *ngIf="!isLoading && bookingDetails" class="row">
+    <!-- Software Details Box -->
+    <div class="col-md-4">
+      <div class="card p-4 shadow">
+        <h4>Software Details</h4>
+        <p><strong>Name:</strong> {{ softwareData.name || 'N/A' }}</p>
+        <p><strong>Developer:</strong> {{ softwareData.developer || 'Unknown' }}</p>
+        <p><strong>Version:</strong> {{ softwareData.version || 'N/A' }}</p>
+        <p><strong>Description:</strong> {{ softwareData.description || 'No description available' }}</p>
+
+        <button *ngIf="userRole === 'ADMIN'" class="btn btn-primary mt-3 w-100"
+                (click)="downloadSoftware(softwareData.filePath)">
+          Download
+        </button>
+      </div>
+    </div>
+
+    <!-- Scan Result Box -->
+    <div class="col-md-4">
+      <div class="card p-4 shadow">
+        <h4>Scan Result</h4>
+        <p><strong>Status:</strong>
+          <span
+            [class.text-success]="scanResultData.status === 'SAFE'"
+            [class.text-danger]="scanResultData.status === 'INFECTED'"
+            [class.text-warning]="scanResultData.status === 'UNKNOWN'"
+          >
+            {{ scanResultData.status || 'Unknown' }}
+          </span>
+        </p>
+        <p><strong>Detail:</strong> {{ scanResultData?.details || 'None' }}</p>
+        <p><strong>Scan Date:</strong> {{ scanResultData.scanDate ? (scanResultData.scanDate | date: 'short') : 'N/A' }}</p>
+
+        <button *ngIf="userRole === 'ADMIN'" class="btn btn-primary mt-3 w-100">
+          Edit
+        </button>
+      </div>
+    </div>
+
+    <!-- Issues Box -->
+    <div class="col-md-4">
+      <div class="card p-4 shadow">
+        <h4>Issues</h4>
+        <p><strong>Threats:</strong> {{ issuesData?.threats || 'None detected' }}</p>
+        <p><strong>Repeat Threats:</strong> {{ issuesData?.repeatThreats || 'None' }}</p>
+        <p><strong>Notes:</strong> {{ issuesData?.notes || 'No additional notes' }}</p>
+
+        <button *ngIf="userRole === 'ADMIN'" class="btn btn-primary mt-3 w-100">
+          Edit
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Chỉ ADMIN mới thấy phần Post Scan Result & Post Issue -->
+  <div *ngIf="userRole === 'ADMIN'" class="d-flex gap-3 mt-4">
+    <!-- Post Scan Result -->
+    <div class="card p-4 shadow w-50">
+      <h4>Post Scan Result</h4>
+
+      <div class="form-group">
+        <label for="scanStatus">Scan Status:</label>
+        <select id="scanStatus" class="form-control" [(ngModel)]="scanResult.status">
+          <option value="SAFE">SAFE</option>
+          <option value="INFECTED">INFECTED</option>
+          <option value="UNKNOWN">UNKNOWN</option>
+        </select>
+      </div>
+
+      <div class="form-group mt-2">
+        <label for="scanDetails">Details:</label>
+        <textarea id="scanDetails" class="form-control" rows="3" [(ngModel)]="scanResult.details"></textarea>
+      </div>
+
+      <div class="form-group mt-2">
+        <label for="scanDate">Scan Date:</label>
+        <input id="scanDate" type="datetime-local" class="form-control" [(ngModel)]="scanResult.scanDate">
+      </div>
+
+      <button class="btn btn-primary mt-3 w-100" (click)="postScanResult()">Submit Scan Result</button>
+    </div>
+
+    <!-- Post Issue -->
+    <div class="card p-4 shadow w-50">
+      <h4>Post Issue</h4>
+
+      <div class="form-group">
+        <label for="threats">Threats:</label>
+        <input id="threats" type="text" class="form-control" [(ngModel)]="issueData.threats">
+      </div>
+
+      <div class="form-group mt-2">
+        <label for="repeatThreats">Repeat Threats:</label>
+        <input id="repeatThreats" type="text" class="form-control" [(ngModel)]="issueData.repeatThreats">
+      </div>
+
+      <div class="form-group mt-2">
+        <label for="notes">Notes:</label>
+        <textarea id="notes" class="form-control" rows="3" [(ngModel)]="issueData.notes"></textarea>
+      </div>
+
+      <button class="btn btn-primary mt-3 w-100" (click)="postIssues()">Submit Issue</button>
+    </div>
+  </div>
+</div>

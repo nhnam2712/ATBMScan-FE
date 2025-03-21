@@ -1,0 +1,50 @@
+<div class="container mt-4">
+  <h3>Upload Software</h3>
+
+  <form (submit)="uploadSoftware()">
+    <input type="text" [(ngModel)]="softwareData.name" name="name" placeholder="Software Name" required>
+    <input type="text" [(ngModel)]="softwareData.version" name="version" placeholder="Version" required>
+    <input type="text" [(ngModel)]="softwareData.description" name="description" placeholder="Description" required>
+    <input type="text" [(ngModel)]="softwareData.userId" name="userId" placeholder="User ID" readonly>
+
+    <!-- Drag and Drop Zone -->
+    <div class="dropbox" (dragover)="onDragOver($event)" (drop)="onDrop($event)">
+      <p *ngIf="!selectedFile">Drag & drop your file here, or click to select</p>
+      <p *ngIf="selectedFile">{{ selectedFile.name }}</p>
+    </div>
+
+    <input type="file" (change)="onFileSelected($event)" hidden #fileInput>
+
+    <button type="button" (click)="fileInput.click()">Select File</button>
+    <button type="submit">Upload Software</button>
+  </form>
+</div>
+
+
+  <div class="container mt-4">
+    <h3>Softwares List</h3>
+
+<table>
+  <thead>
+  <tr>
+    <th>ID</th>
+    <th>Name</th>
+    <th>Version</th>
+    <th>Description</th>
+    <th>Download Files</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let software of softwares">
+    <td>{{ software.id }}</td>
+    <td>{{ software.name }}</td>
+    <td>{{ software.version }}</td>
+    <td>{{ software.description }}</td>
+    <td>
+      <button (click)="downloadSoftware(software.filePath)">Download</button>
+      <button (click)="deleteSoftware(software.id)">Delete</button>
+    </td>
+  </tr>
+  </tbody>
+</table>
+  </div>
