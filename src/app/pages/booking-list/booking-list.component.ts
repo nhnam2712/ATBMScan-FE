@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { RoomService } from 'src/app/service/room.service';
 
 @Component({
@@ -12,8 +13,12 @@ export class BookingListComponent implements OnInit {
   isLoading = true;
   protected isAdmin = false;
   selectedBooking: any = null; // For editing status
+  userRole: string | null = null;
 
-  constructor(private bookingService: RoomService) {}
+  constructor(
+    private router: Router,           // ✅ Inject Router
+    private bookingService: RoomService
+  ) {}
 
   ngOnInit(): void {
     const userRole = localStorage.getItem('role');
@@ -40,8 +45,9 @@ export class BookingListComponent implements OnInit {
   }
 
   viewBooking(booking: any): void {
-    alert(`Viewing details for booking: ${booking.bookingReference}`);
-    // Navigate to another page or open a modal if needed
+    localStorage.setItem('softwareId', booking.softwareId);
+    localStorage.setItem('bookingId', booking.id);
+    this.router.navigate(['/scan-result']);
   }
 
   editBookingStatus(booking: any): void {

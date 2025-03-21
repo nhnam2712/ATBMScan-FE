@@ -25,25 +25,25 @@
         </li>
       </ul>
 
+      <!-- Right-side Actions (Notifications & Logout) -->
       <div class="d-flex align-items-center">
+
         <!-- Notification Dropdown -->
-        <div class="dropdown dropstart me-3" (mouseover)="showDropdown=true" (mouseleave)="showDropdown=false">
-          <button class="btn btn-re"
-                  type="button" style="outline: none; box-shadow: none;">
-            <i class="fas fa-bell text-white fs-5"></i>
+        <div class="dropdown me-3" (mouseover)="showDropdown=true" (mouseleave)="showDropdown=false">
+          <button class="btn btn-light position-relative" (click)="toggleDropdown()">
+            <i class="fas fa-bell text-dark fs-5"></i>
             <span *ngIf="notifications.length > 0"
                   class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger shadow-sm">
               {{ notifications.length }}
             </span>
           </button>
 
-          <!-- Notification Dropdown Menu -->
           <ul class="dropdown-menu notification-dropdown" [ngClass]="{'show': showDropdown}">
             <li *ngIf="notifications.length === 0" class="dropdown-item text-muted text-center">
               No new notifications
             </li>
             <li *ngFor="let notification of notifications" class="dropdown-item">
-              <i class="fas fa-circle text-primary"></i> {{ notification }}
+              <i class="fas fa-circle text-primary"></i> {{ notification.message }}
             </li>
             <li class="dropdown-divider"></li>
             <li class="text-center">
@@ -52,11 +52,14 @@
           </ul>
         </div>
 
+        <!-- User Info & Logout -->
         <h6 class="text-white me-3">{{ loggedUserData?.userName }}</h6>
-        <button class="btn btn-danger shadow-sm" type="button" (click)="onLogoff()">Logout</button>
+        <button class="btn btn-danger shadow-sm" (click)="onLogoff()">Logout</button>
+
       </div>
     </div>
   </div>
 </nav>
 
+<!-- Ensure router-outlet is outside navbar -->
 <router-outlet></router-outlet>

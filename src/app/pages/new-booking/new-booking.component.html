@@ -9,10 +9,20 @@
         id="userId"
         formControlName="userId"
         class="form-control"
-        placeholder="Enter User ID"
+        readonly
       />
-      <div *ngIf="bookingForm.get('userId')?.touched && bookingForm.get('userId')?.invalid">
-        <small class="text-danger">User ID is required.</small>
+    </div>
+
+    <!-- Software Selection -->
+    <div class="form-group">
+      <label for="softwareId">Select Software:</label>
+      <select id="softwareId" formControlName="softwareId" class="form-control">
+        <option *ngFor="let software of softwares" [value]="software.id">
+          {{ software.name }} ({{ software.version }})
+        </option>
+      </select>
+      <div *ngIf="bookingForm.get('softwareId')?.touched && bookingForm.get('softwareId')?.invalid">
+        <small class="text-danger">Please select a software.</small>
       </div>
     </div>
 
@@ -25,9 +35,6 @@
         formControlName="bookingDate"
         class="form-control"
       />
-      <div *ngIf="bookingForm.get('bookingDate')?.touched && bookingForm.get('bookingDate')?.invalid">
-        <small class="text-danger">Booking Date is required.</small>
-      </div>
     </div>
 
     <!-- Status Field -->
@@ -36,9 +43,6 @@
       <select id="status" formControlName="status" class="form-control">
         <option value="PENDING">PENDING</option>
       </select>
-      <div *ngIf="bookingForm.get('status')?.touched && bookingForm.get('status')?.invalid">
-        <small class="text-danger">Status is required.</small>
-      </div>
     </div>
 
     <!-- Submit Button -->

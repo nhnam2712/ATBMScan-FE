@@ -1,66 +1,74 @@
-/* Move dropdown left */
+/* Navbar Styling */
+.navbar {
+  padding: 0.75rem 1rem;
+}
+
+.navbar-brand {
+  font-size: 1.25rem;
+  font-weight: bold;
+}
+
+.navbar-nav .nav-link {
+  font-size: 1rem;
+  padding: 0.5rem 1rem;
+}
+
+.navbar-nav .nav-link:hover {
+  color: #f8d210 !important;
+}
+
+/* Notification Dropdown */
+.dropdown {
+  position: relative;
+}
+
 .notification-dropdown {
-  right: auto !important; /* Remove Bootstrap default */
-  left: -150px !important; /* Move dropdown inside the screen */
-  transform: translateX(-20px); /* Fine-tune position */
-}
-
-/* Dropdown styling */
-.dropdown-menu {
-  min-width: 280px;
-  max-height: 300px;
-  overflow-y: auto;
-  border-radius: 10px;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
-  border: none;
-  padding: 8px;
-}
-
-/* Style for each dropdown item */
-.dropdown-item {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 10px;
-  font-size: 14px;
-  transition: background 0.2s ease-in-out, transform 0.1s ease-in-out;
+  position: absolute;
+  right: 0;
+  top: 120%;
+  min-width: 250px;
+  background: #fff;
   border-radius: 8px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+  padding: 10px 0;
+  z-index: 1000;
+  display: none;
 }
 
-/* Hover effect */
-.dropdown-item:hover {
-  background-color: rgba(0, 123, 255, 0.1);
-  transform: translateX(3px);
+.notification-dropdown.show {
+  display: block;
 }
 
-/* Active (click) effect */
-.dropdown-item:active {
-  background-color: rgba(0, 123, 255, 0.2);
+.notification-dropdown .dropdown-item {
+  font-size: 0.9rem;
+  padding: 10px 15px;
+  cursor: pointer;
 }
 
-/* Notification icons */
-.dropdown-item i {
-  color: #007bff;
-  font-size: 16px;
+.notification-dropdown .dropdown-item:hover {
+  background-color: #f8f9fa;
 }
 
-/* Badge for unread notifications */
+.notification-dropdown .dropdown-divider {
+  margin: 5px 0;
+}
+
+/* Badge for Notifications */
 .badge {
-  font-size: 12px;
+  font-size: 0.8rem;
   font-weight: bold;
   padding: 5px 8px;
 }
 
-/* Clear all button */
-.clear-btn {
-  width: 100%;
-  text-align: center;
-  font-size: 13px;
-  padding: 6px;
-  border-radius: 6px;
-  transition: background 0.2s ease-in-out;
+/* Buttons */
+.btn-outline-danger {
+  font-size: 0.85rem;
 }
 
-.clear-btn:hover {
-  background-color: rgba(255, 0, 0, 0.1);
+.btn-danger {
+  padding: 0.5rem 1rem;
+}
+
+.shadow-sm {
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1) !important;
 }

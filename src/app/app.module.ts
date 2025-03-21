@@ -15,6 +15,7 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { RegisterComponent } from './pages/register/register.component';
 import {SoftwaresComponent} from './pages/softwares/softwares.component';
+import {ScanResultsComponent} from "./pages/scan-results/scan-results.component";
 
 @NgModule({ declarations: [
         AppComponent,
@@ -26,6 +27,7 @@ import {SoftwaresComponent} from './pages/softwares/softwares.component';
         DashboardComponent,
         RegisterComponent,
         SoftwaresComponent,
+        ScanResultsComponent,
     ],
     bootstrap: [AppComponent],
   imports: [FormsModule,
@@ -33,6 +35,6 @@ import {SoftwaresComponent} from './pages/softwares/softwares.component';
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    CommonModule],
+    CommonModule,],
   providers: [provideHttpClient(withInterceptorsFromDi())] })
 export class AppModule { }

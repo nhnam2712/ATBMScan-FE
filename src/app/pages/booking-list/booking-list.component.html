@@ -10,6 +10,8 @@
     <tr>
       <th>#</th>
       <th>Booking Id</th>
+      <th>Software Id</th>
+      <th>Software Name</th>
       <th>Booking Ref</th>
       <th>Status</th>
       <th>Booking Date</th>
@@ -20,6 +22,8 @@
     <tr *ngFor="let booking of bookings; let i = index">
       <td>{{ i + 1 }}</td>
       <td>{{ booking.id }}</td>
+      <td>{{ booking.softwareId }}</td>
+      <td>{{ booking.softwareName }}</td>
       <td>{{ booking.bookingReference }}</td>
       <td>
           <span
@@ -33,7 +37,9 @@
       </td>
       <td>{{ booking.bookingDate | date: 'short' }}</td>
       <td>
-        <button class="btn btn-info btn-sm me-2" (click)="viewBooking(booking)">
+        <button *ngIf="!(booking.status === 'PENDING' && userRole === 'USER')"
+                class="btn btn-info btn-sm me-2"
+                (click)="viewBooking(booking)">
           View
         </button>
 
@@ -42,7 +48,8 @@
           Edit
         </button>
 
-        <button class="btn btn-danger btn-sm" (click)="deleteBooking(booking)">
+        <button *ngIf="!(booking.status === 'CONFIRMED')  "
+          class="btn btn-danger btn-sm" (click)="deleteBooking(booking)">
           Delete
         </button>
       </td>

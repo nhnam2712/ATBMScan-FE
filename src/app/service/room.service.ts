@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import {Observable, throwError} from "rxjs";
+import {catchError, Observable, throwError} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
@@ -41,13 +41,22 @@ export class RoomService {
 
   }
 
-  getAllSoftwares() {
+  getAllSoftwares(userId: string): Observable<any[]> {
     const token = localStorage.getItem('token'); // Retrieve token from localStorage or another source
     const headers = new HttpHeaders({
       Authorization: `Bearer ${token}`
     });
 
-    return this.http.get<any>(this.apiEndPoint + 'software', {headers});
+    return this.http.get<any>(`${this.apiEndPoint}software/${userId}`, {headers});
+  }
+
+  getSoftwareById(id: string): Observable<any[]> {
+    const token = localStorage.getItem('token'); // Retrieve token from localStorage or another source
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`
+    });
+
+    return this.http.get<any>(`${this.apiEndPoint}software/specific/${id}`, {headers});
   }
 
   deleteSoftware(id: string): Observable<any> {
@@ -118,6 +127,15 @@ getAllUsers() {
     return this.http.post(this.apiEndPoint + 'bookings', obj, { headers });
   }
 
+  getBookingDetails(id: string): Observable<any> {
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`
+    })
+
+    return this.http.get(this.apiEndPoint + 'bookings/specific/' + id, { headers });
+  }
+
   deleteBooking(id: any) {
     const token = localStorage.getItem('token');
     const headers = new HttpHeaders({
@@ -145,4 +163,69 @@ getAllUsers() {
     return this.http.put(`${this.apiEndPoint}bookings/${id}`, body, { headers });
   }
 
+  getIssuesById(id: any) {
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`
+    });
+
+    return this.http.get(`${this.apiEndPoint}issues/${id}`, { headers });
+  }
+
+  createIssues() {
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`
+    });
+
+    return this.http.delete(`${this.apiEndPoint}issues`, { headers });
+  }
+
+  getScanResults(id: any) {
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`
+    });
+
+    return this.http.get(`${this.apiEndPoint}results/${id}`, { headers });
+  }
+
+  updateScanResults(id: any, scanResults: any) {
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`
+    });
+
+    return this.http.get(`${this.apiEndPoint}results/${id}`, { headers });
+  }
+
+  postScanResults(id: any, scanResults: any) {
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`
+    });
+
+    return this.http.post(`${this.apiEndPoint}results`, scanResults , { headers });
+  }
+
+  postIssues(issueData: any) {
+    const token = localStorage.getItem('token');
+
+    if (!token) {
+      console.error("❌ Token is missing!");
+      return throwError(() => new Error("Unauthorized: Token is missing"));
+    }
+
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`,
+      'Content-Type': 'application/json' // ✅ Đảm bảo gửi JSON
+    });
+
+    return this.http.post(`${this.apiEndPoint}issues`, issueData, { headers }).pipe(
+      catchError(error => {
+        console.error("❌ Error response:", error);
+        return throwError(() => error);
+      })
+    );
+  }
 }

@@ -8,6 +8,7 @@ import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { UsersComponent } from './pages/users/users.component';
 import { RegisterComponent } from './pages/register/register.component';
 import {SoftwaresComponent} from './pages/softwares/softwares.component';
+import {ScanResultsComponent} from "./pages/scan-results/scan-results.component";
 
 
 const routes: Routes = [
@@ -44,6 +45,10 @@ const routes: Routes = [
       {
         path:'bookings',
         component:BookingListComponent
+      },
+      {
+        path:'scan-result',
+        component: ScanResultsComponent
       },
       {
         path:'users',
