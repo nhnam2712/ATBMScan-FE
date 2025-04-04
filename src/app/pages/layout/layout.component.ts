@@ -21,30 +21,6 @@ export class LayoutComponent implements OnInit {
     this.userId = localStorage.getItem('userId'); // Get userId
     this.loggedUserData.userName = localStorage.getItem('userName'); // Get userName
     this.isAdmin = localStorage.getItem('role') === 'ADMIN';
-
-    if (this.userId) {
-      this.fetchNotifications();
-      setInterval(() => this.fetchNotifications(), 100000); // Polling every 100s
-    }
-  }
-
-  fetchNotifications() {
-    if (!this.userId) return;
-
-    const token = localStorage.getItem('token'); // Retrieve token
-
-    this.http.get<any[]>(`http://localhost:8080/api/notifications/${this.userId}`, {
-      headers: {
-        Authorization: `Bearer ${token}` // Add token to request headers
-      }
-    }).subscribe(
-      (data) => {
-        this.notifications = data;
-      },
-      (error) => {
-        console.error("Error fetching notifications:", error);
-      }
-    );
   }
 
   toggleDropdown() {

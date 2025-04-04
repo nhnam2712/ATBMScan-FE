@@ -55,6 +55,7 @@
         <p><strong>Threats:</strong> {{ issuesData?.threats || 'None detected' }}</p>
         <p><strong>Repeat Threats:</strong> {{ issuesData?.repeatThreats || 'None' }}</p>
         <p><strong>Notes:</strong> {{ issuesData?.notes || 'No additional notes' }}</p>
+        <p><strong>Issue Date:</strong> {{ issuesData.fixDeadline  ? (issuesData.fixDeadline | date: 'short') : 'N/A' }}</p>
 
         <button *ngIf="userRole === 'ADMIN'" class="btn btn-primary mt-3 w-100">
           Edit
@@ -100,10 +101,10 @@
         <input id="threats" type="text" class="form-control" [(ngModel)]="issueData.threats">
       </div>
 
-      <div class="form-group mt-2">
-        <label for="repeatThreats">Repeat Threats:</label>
-        <input id="repeatThreats" type="text" class="form-control" [(ngModel)]="issueData.repeatThreats">
-      </div>
+<!--      <div class="form-group mt-2">-->
+<!--        <label for="repeatThreats">Repeat Threats:</label>-->
+<!--        <input id="repeatThreats" type="text" class="form-control" [(ngModel)]="issueData.repeatThreats">-->
+<!--      </div>-->
 
       <div class="form-group mt-2">
         <label for="notes">Notes:</label>

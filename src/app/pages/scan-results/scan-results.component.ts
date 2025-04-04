@@ -12,6 +12,7 @@ import { HttpHeaders } from '@angular/common/http';
 export class ScanResultsComponent {
   softwareId: string = '';
   bookingId: string = '';
+  scanResultId: string = '';
   bookingDetails: any = null;
   scanResultData: any = null;
   issuesData: any = null;
@@ -38,11 +39,13 @@ export class ScanResultsComponent {
 
   ngOnInit() {
     this.bookingId = localStorage.getItem('bookingId') ?? '';
+    this.scanResultId = localStorage.getItem('ScanResultId') ?? '';
     this.userRole = localStorage.getItem('role') ?? '';
 
     if (this.bookingId) {
       this.fetchBookingDetails(this.bookingId);
       this.fetchScanResult(this.bookingId);
+      this.fetchIssuesData(this.scanResultId);
     } else {
       this.errorMessage = 'Booking ID not found in localStorage.';
       this.isLoading = false;
@@ -57,7 +60,6 @@ export class ScanResultsComponent {
         if (data?.softwareId) {
           this.softwareId = data.softwareId;
           this.fetchSoftwareDetails(this.softwareId);
-          this.fetchIssuesData(this.softwareId);
 
           this.scanResult.softwareId = this.softwareId;
           this.scanResult.bookingId = this.bookingId;
@@ -106,8 +108,8 @@ export class ScanResultsComponent {
     });
   }
 
-  fetchIssuesData(softwareId: string) {
-    this.scanService.getIssuesById(softwareId).subscribe({
+  fetchIssuesData(scanResultId: string) {
+    this.scanService.getIssuesById(scanResultId).subscribe({
       next: (data) => {
         this.issuesData = Array.isArray(data) && data.length > 0 ? data[0] : null;
       },
@@ -170,10 +172,9 @@ export class ScanResultsComponent {
     }
 
     const issuePayload = {
-      softwareId: this.softwareId,
       scanResultId: localStorage.getItem('ScanResultId') ?? '',
       threats: this.issueData.threats,
-      repeatThreats: this.issueData.repeatThreats,
+      // repeatThreats: this.issueData.repeatThreats,
       notes: this.issueData.notes
     };
 
@@ -182,7 +183,7 @@ export class ScanResultsComponent {
     this.scanService.postIssues(issuePayload).subscribe({
       next: () => {
         alert('Issue submitted successfully!');
-        this.fetchIssuesData(this.softwareId);
+        this.fetchIssuesData(this.scanResultId);
       },
       error: (err) => {
         console.error("❌ Error submitting issue:", err);
