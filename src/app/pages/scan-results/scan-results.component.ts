@@ -15,7 +15,7 @@ export class ScanResultsComponent {
   scanResultId: string = '';
   bookingDetails: any = null;
   scanResultData: any = null;
-  issuesData: any = null;
+  issuesList: any[] = [];
   softwareData: any = null;
   isLoading: boolean = true;
   errorMessage: string | null = null;
@@ -32,7 +32,8 @@ export class ScanResultsComponent {
   issueData = {
     threats: '',
     repeatThreats: '',
-    notes: ''
+    notes: '',
+    fixDeadline: ''
   };
 
   constructor(private route: ActivatedRoute, private scanService: RoomService) {}
@@ -111,7 +112,7 @@ export class ScanResultsComponent {
   fetchIssuesData(scanResultId: string) {
     this.scanService.getIssuesById(scanResultId).subscribe({
       next: (data) => {
-        this.issuesData = Array.isArray(data) && data.length > 0 ? data[0] : null;
+        this.issuesList = Array.isArray(data) ? data : [];
       },
       error: (error) => {
         console.error('Error fetching issues data:', error);
@@ -150,6 +151,22 @@ export class ScanResultsComponent {
     });
   }
 
+  isExpired(date: string | Date): boolean {
+    return new Date(date) < new Date();
+  }
+
+  rescheduleIssue(issue: any): void {
+    // You can open a modal, or prompt, or just assign a new date directly
+    const newDate = prompt('Enter new deadline (YYYY-MM-DD HH:mm):', new Date().toISOString().slice(0, 16));
+    if (newDate) {
+      issue.fixDeadline = new Date(newDate);
+      // Call backend service to update if needed
+      // this.issueService.updateIssue(issue).subscribe(...);
+      console.log('New deadline:', issue.fixDeadline);
+    }
+  }
+
+
   postScanResult() {
     if (!this.scanResult.scanDate || !this.scanResult.status || !this.scanResult.details) {
       alert('Please fill in all scan result fields.');
@@ -166,7 +183,7 @@ export class ScanResultsComponent {
   }
 
   postIssues() {
-    if (!this.issueData.threats || !this.issueData.repeatThreats || !this.issueData.notes) {
+    if (!this.issueData.threats || !this.issueData.notes || !this.issueData.fixDeadline) {
       alert('Please fill in all issue fields.');
       return;
     }
@@ -175,7 +192,8 @@ export class ScanResultsComponent {
       scanResultId: localStorage.getItem('ScanResultId') ?? '',
       threats: this.issueData.threats,
       // repeatThreats: this.issueData.repeatThreats,
-      notes: this.issueData.notes
+      notes: this.issueData.notes,
+      fixDeadline: this.issueData.fixDeadline
     };
 
     console.log("Submitting issue:", issuePayload);

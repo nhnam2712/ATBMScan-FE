@@ -10,8 +10,6 @@ import { Router } from '@angular/router';
 })
 export class LayoutComponent implements OnInit {
   loggedUserData: { userName: string | null } = { userName: null };
-  notifications: any[] = [];
-  showDropdown = false;
   isAdmin = false;
   userId: string | null = null; // Store userId
 
@@ -22,15 +20,6 @@ export class LayoutComponent implements OnInit {
     this.loggedUserData.userName = localStorage.getItem('userName'); // Get userName
     this.isAdmin = localStorage.getItem('role') === 'ADMIN';
   }
-
-  toggleDropdown() {
-    this.showDropdown = !this.showDropdown;
-  }
-
-  clearNotifications() {
-    this.notifications = [];
-  }
-
   onLogoff() {
     localStorage.clear();
     this.router.navigateByUrl('/login');

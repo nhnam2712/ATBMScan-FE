@@ -48,19 +48,48 @@
       </div>
     </div>
 
-    <!-- Issues Box -->
-    <div class="col-md-4">
-      <div class="card p-4 shadow">
-        <h4>Issues</h4>
-        <p><strong>Threats:</strong> {{ issuesData?.threats || 'None detected' }}</p>
-        <p><strong>Repeat Threats:</strong> {{ issuesData?.repeatThreats || 'None' }}</p>
-        <p><strong>Notes:</strong> {{ issuesData?.notes || 'No additional notes' }}</p>
-        <p><strong>Issue Date:</strong> {{ issuesData.fixDeadline  ? (issuesData.fixDeadline | date: 'short') : 'N/A' }}</p>
+    </div>
 
-        <button *ngIf="userRole === 'ADMIN'" class="btn btn-primary mt-3 w-100">
-          Edit
-        </button>
-      </div>
+    <!-- Issues Box -->
+  <div *ngIf="!isLoading && bookingDetails" class="mt-4">
+    <div class="card p-4 shadow">
+      <h4>Issues</h4>
+
+      <table class="table table-bordered table-sm" *ngIf="issuesList.length > 0; else noIssues">
+        <thead>
+        <tr>
+          <th>Threats</th>
+          <th>Repeat Threats</th>
+          <th>Notes</th>
+          <th>Fix Deadline</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let issue of issuesList">
+          <td>{{ issue.threats || 'None detected' }}</td>
+          <td>{{ issue.repeatThreats || 'None' }}</td>
+          <td>{{ issue.notes || 'No additional notes' }}</td>
+          <td>
+  <span [ngClass]="{ 'text-danger': isExpired(issue.fixDeadline), 'text-success': !isExpired(issue.fixDeadline) }">
+    {{ issue.fixDeadline ? (issue.fixDeadline | date: 'short') : 'N/A' }}
+  </span>
+            <span *ngIf="isExpired(issue.fixDeadline)" class="badge bg-danger ms-2">Expired</span>
+
+            <button *ngIf="isExpired(issue.fixDeadline) && userRole === 'ADMIN'"
+                    class="btn btn-sm btn-outline-primary ms-2"
+                    (click)="rescheduleIssue(issue)">
+              Reschedule
+            </button>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+
+      <ng-template #noIssues>
+        <p>No issues found for this scan result.</p>
+      </ng-template>
+
+      <button *ngIf="userRole === 'ADMIN'" class="btn btn-primary mt-3 w-100">Edit</button>
     </div>
   </div>
 
@@ -109,6 +138,11 @@
       <div class="form-group mt-2">
         <label for="notes">Notes:</label>
         <textarea id="notes" class="form-control" rows="3" [(ngModel)]="issueData.notes"></textarea>
+      </div>
+
+      <div class="form-group mt-2">
+        <label for="FixDeadline">Fix Deadline:</label>
+        <input id="fixDeadline" type="datetime-local" class="form-control" [(ngModel)]="issueData.fixDeadline">
       </div>
 
       <button class="btn btn-primary mt-3 w-100" (click)="postIssues()">Submit Issue</button>
