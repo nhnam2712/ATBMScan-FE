@@ -228,4 +228,15 @@ getAllUsers() {
       })
     );
   }
+
+  //rechedule issue
+  reScheduleIssue(issueId: any, newDate: any) {
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`,
+      'Content-Type': 'application/json'
+    });
+
+    return this.http.put(`${this.apiEndPoint}issues/${issueId}`,  newDate , { headers });
+  }
 }

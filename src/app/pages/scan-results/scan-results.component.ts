@@ -156,16 +156,22 @@ export class ScanResultsComponent {
   }
 
   rescheduleIssue(issue: any): void {
-    // You can open a modal, or prompt, or just assign a new date directly
-    const newDate = prompt('Enter new deadline (YYYY-MM-DD HH:mm):', new Date().toISOString().slice(0, 16));
+    const newDate = prompt('Enter new deadline (YYYY-MM-DD):', new Date().toISOString().slice(0, 10));
     if (newDate) {
-      issue.fixDeadline = new Date(newDate);
-      // Call backend service to update if needed
-      // this.issueService.updateIssue(issue).subscribe(...);
-      console.log('New deadline:', issue.fixDeadline);
+      const payload = { fixDeadline: newDate };
+
+      this.scanService.reScheduleIssue(issue.id, payload).subscribe({
+        next: (updatedIssue) => {
+          alert('Issue rescheduled successfully!');
+          this.fetchIssuesData(this.scanResultId);
+        },
+        error: (err) => {
+          console.error("Error rescheduling issue:", err);
+          alert('Error: ' + err.message);
+        }
+      });
     }
   }
-
 
   postScanResult() {
     if (!this.scanResult.scanDate || !this.scanResult.status || !this.scanResult.details) {
