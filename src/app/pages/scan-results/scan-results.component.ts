@@ -216,12 +216,16 @@ export class ScanResultsComponent {
     });
   }
 
-  toggleFixed(issue: any): void {
-    const isFixed = !issue.isFixed;
+  toggleFixed(issue: any, event: any): void {
+    const isFixed = event.target.checked;
+
+    if (isFixed) {
+      issue.fixDeadline = null; // clear fixDeadline when marking fixed
+    }
 
     this.scanService.updateFixStatus(issue.id, isFixed).subscribe({
       next: (updatedIssue) => {
-        issue.isFixed = updatedIssue.isFixed;
+        issue.fixed = updatedIssue.fixed;
         alert(`Issue marked as ${isFixed ? 'fixed' : 'not fixed'}`);
       },
       error: (err) => {

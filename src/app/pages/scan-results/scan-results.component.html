@@ -59,7 +59,7 @@
       <thead>
         <tr>
           <th>Threats</th>
-          <th>Repeat Threats</th>
+<!--          <th>Repeat Threats</th>-->
           <th>Notes</th>
           <th>Fix Deadline</th>
           <th>Reschedule Count</th>
@@ -69,11 +69,11 @@
         <tbody>
         <tr *ngFor="let issue of issuesList">
           <td>{{ issue.threats || 'None detected' }}</td>
-          <td>{{ issue.repeatThreats || 'None' }}</td>
+<!--          <td>{{ issue.repeatThreats || 'None' }}</td>-->
           <td>{{ issue.notes || 'No additional notes' }}</td>
           <td>
   <span [ngClass]="{ 'text-danger': isExpired(issue.fixDeadline), 'text-success': !isExpired(issue.fixDeadline) }">
-    {{ issue.fixDeadline ? (issue.fixDeadline | date: 'short') : 'N/A' }}
+    {{ issue.fixed ? 'DONE' : (issue.fixDeadline ? (issue.fixDeadline | date: 'short') : 'N/A') }}
   </span>
             <span *ngIf="isExpired(issue.fixDeadline)" class="badge bg-danger ms-2">Expired</span>
 
@@ -88,10 +88,10 @@
             <input
               *ngIf="userRole === 'ADMIN'"
               type="checkbox"
-              [checked]="issue.isFixed"
-              (change)="toggleFixed(issue)"
+              [checked]="issue.fixed"
+              (change)="toggleFixed(issue, $event)"
             />
-            <span *ngIf="userRole !== 'ADMIN'">{{ issue.isFixed ? '✔️' : '❌' }}</span>
+            <span *ngIf="userRole !== 'ADMIN'">{{ issue.fixed ? '✔️' : '❌' }}</span>
           </td>
         </tr>
         </tbody>
