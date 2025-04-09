@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import {catchError, Observable, throwError} from "rxjs";
 
@@ -238,5 +238,21 @@ getAllUsers() {
     });
 
     return this.http.put(`${this.apiEndPoint}issues/${issueId}`,  newDate , { headers });
+  }
+
+  //checkbox issue
+  updateFixStatus(issueId: string, isFixed: boolean): Observable<any> {
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`,
+      'Content-Type': 'application/json'
+    });
+
+    const params = new HttpParams().set('isFixed', isFixed.toString());
+
+    return this.http.put(`${this.apiEndPoint}issues/${issueId}/fix-status`, null, {
+      headers,
+      params
+    });
   }
 }

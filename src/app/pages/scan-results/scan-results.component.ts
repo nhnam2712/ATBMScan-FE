@@ -215,4 +215,19 @@ export class ScanResultsComponent {
       }
     });
   }
+
+  toggleFixed(issue: any): void {
+    const isFixed = !issue.isFixed;
+
+    this.scanService.updateFixStatus(issue.id, isFixed).subscribe({
+      next: (updatedIssue) => {
+        issue.isFixed = updatedIssue.isFixed;
+        alert(`Issue marked as ${isFixed ? 'fixed' : 'not fixed'}`);
+      },
+      error: (err) => {
+        console.error("Error updating fix status:", err);
+        alert('Error updating fix status');
+      }
+    });
+  }
 }
