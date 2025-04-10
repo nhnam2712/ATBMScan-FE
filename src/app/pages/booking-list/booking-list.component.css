@@ -1,45 +1,35 @@
 .container {
   max-width: 1000px;
   margin: auto;
-  padding: 2rem;
-  background-color: #ffffff;
-  border-radius: 12px;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
 }
 
 h3 {
-  font-size: 1.75rem;
-  font-weight: 600;
-  color: #333;
-  margin-bottom: 1rem;
+  text-align: center;
+  margin-bottom: 25px;
+  color: #2c3e50;
 }
 
 .table {
+  font-size: 0.95rem;
   border-radius: 8px;
   overflow: hidden;
-  background-color: #fafafa;
 }
 
-.table thead {
-  background-color: #343a40;
-  color: #fff;
-}
-
-.table th,
-.table td {
-  vertical-align: middle;
-  text-align: center;
+thead.thead-dark th {
+  background-color: #ffffff;
+  color: #000000;
 }
 
 .badge {
-  padding: 0.4em 0.75em;
+  padding: 5px 10px;
   border-radius: 12px;
-  font-size: 0.85rem;
+  font-size: 0.75rem;
+  font-weight: 600;
 }
 
 .badge-success {
   background-color: #28a745;
-  color: #fff;
+  color: white;
 }
 
 .badge-warning {
@@ -49,18 +39,26 @@ h3 {
 
 .badge-danger {
   background-color: #dc3545;
-  color: #fff;
+  color: white;
 }
 
-.btn {
-  border-radius: 8px;
-  font-size: 0.85rem;
-  padding: 0.4rem 0.75rem;
+.btn-sm {
+  padding: 5px 10px;
+  font-size: 0.8rem;
+  border-radius: 6px;
+}
+
+.me-2 {
+  margin-right: 0.5rem !important;
+}
+
+/* Modal Styling Override */
+.modal.fade.show.d-block {
+  background-color: rgba(0, 0, 0, 0.5);
 }
 
 .modal-content {
-  border-radius: 12px;
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
 }
 
 .modal-header {
@@ -69,34 +67,25 @@ h3 {
 }
 
 .modal-title {
-  font-weight: 600;
-  font-size: 1.25rem;
+  font-weight: bold;
 }
 
-.modal-body label {
-  font-weight: 500;
+.modal-body select.form-control {
+  margin-top: 10px;
 }
 
-.modal-footer {
-  border-top: none;
-  display: flex;
-  justify-content: flex-end;
-  gap: 0.5rem;
+.modal-footer .btn {
+  min-width: 100px;
 }
 
-/* Fade-in animation for modal */
-.modal.fade.show.d-block {
-  animation: fadeIn 0.3s ease-in-out;
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(-20px);
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+  .table {
+    font-size: 0.85rem;
   }
 
-  to {
-    opacity: 1;
-    transform: translateY(0);
+  .modal-dialog {
+    margin: 1.75rem auto;
+    width: 95%;
   }
 }
