@@ -1,6 +1,7 @@
 <div class="container mt-4">
   <h3>Booking Scan Result</h3>
 
+  <!-- Loading & Error Messages -->
   <div *ngIf="isLoading" class="text-center mt-3">
     <p>Loading booking details...</p>
   </div>
@@ -9,8 +10,10 @@
     <p>{{ errorMessage }}</p>
   </div>
 
+  <!-- Main Details -->
   <div *ngIf="!isLoading && bookingDetails" class="row">
-    <!-- Software Details Box -->
+
+    <!-- Software Details -->
     <div class="col-md-4">
       <div class="card p-4 shadow">
         <h4>Software Details</h4>
@@ -26,7 +29,7 @@
       </div>
     </div>
 
-    <!-- Scan Result Box -->
+    <!-- Scan Result -->
     <div class="col-md-4">
       <div class="card p-4 shadow">
         <h4>Scan Result</h4>
@@ -34,32 +37,26 @@
           <span
             [class.text-success]="scanResultData.status === 'SAFE'"
             [class.text-danger]="scanResultData.status === 'INFECTED'"
-            [class.text-warning]="scanResultData.status === 'UNKNOWN'"
-          >
+            [class.text-warning]="scanResultData.status === 'UNKNOWN'">
             {{ scanResultData.status || 'Unknown' }}
           </span>
         </p>
         <p><strong>Detail:</strong> {{ scanResultData?.details || 'None' }}</p>
         <p><strong>Scan Date:</strong> {{ scanResultData.scanDate ? (scanResultData.scanDate | date: 'short') : 'N/A' }}</p>
-
-<!--        <button *ngIf="userRole === 'ADMIN'" class="btn btn-primary mt-3 w-100">-->
-<!--          Edit-->
-<!--        </button>-->
       </div>
     </div>
 
-    </div>
+  </div>
 
-    <!-- Issues Box -->
+  <!-- Issues Table -->
   <div *ngIf="!isLoading && bookingDetails" class="mt-4">
     <div class="card p-4 shadow">
       <h4>Issues</h4>
 
       <table class="table table-bordered table-sm issues-table" *ngIf="issuesList.length > 0; else noIssues">
-      <thead>
+        <thead>
         <tr>
           <th>Threats</th>
-<!--          <th>Repeat Threats</th>-->
           <th>Notes</th>
           <th>Fix Deadline</th>
           <th>Reschedule Count</th>
@@ -69,12 +66,11 @@
         <tbody>
         <tr *ngFor="let issue of issuesList">
           <td>{{ issue.threats || 'None detected' }}</td>
-<!--          <td>{{ issue.repeatThreats || 'None' }}</td>-->
           <td>{{ issue.notes || 'No additional notes' }}</td>
           <td>
-  <span [ngClass]="{ 'text-danger': isExpired(issue.fixDeadline), 'text-success': !isExpired(issue.fixDeadline) }">
-    {{ issue.fixed ? 'DONE' : (issue.fixDeadline ? (issue.fixDeadline | date: 'short') : 'N/A') }}
-  </span>
+              <span [ngClass]="{ 'text-danger': isExpired(issue.fixDeadline), 'text-success': !isExpired(issue.fixDeadline) }">
+                {{ issue.fixed ? 'DONE' : (issue.fixDeadline ? (issue.fixDeadline | date: 'short') : 'N/A') }}
+              </span>
             <span *ngIf="isExpired(issue.fixDeadline)" class="badge bg-danger ms-2">Expired</span>
 
             <button *ngIf="isExpired(issue.fixDeadline) && userRole === 'ADMIN'"
@@ -89,8 +85,7 @@
               *ngIf="userRole === 'ADMIN'"
               type="checkbox"
               [checked]="issue.fixed"
-              (change)="toggleFixed(issue, $event)"
-            />
+              (change)="toggleFixed(issue, $event)" />
             <span *ngIf="userRole !== 'ADMIN'">{{ issue.fixed ? '✔️' : '❌' }}</span>
           </td>
         </tr>
@@ -103,8 +98,9 @@
     </div>
   </div>
 
-  <!-- Chỉ ADMIN mới thấy phần Post Scan Result & Post Issue -->
+  <!-- Admin Section: Post Scan Result & Issue -->
   <div *ngIf="userRole === 'ADMIN'" class="d-flex gap-3 mt-4">
+
     <!-- Post Scan Result -->
     <div class="card p-4 shadow w-50">
       <h4>Post Scan Result</h4>
@@ -140,18 +136,13 @@
         <input id="threats" type="text" class="form-control" [(ngModel)]="issueData.threats">
       </div>
 
-<!--      <div class="form-group mt-2">-->
-<!--        <label for="repeatThreats">Repeat Threats:</label>-->
-<!--        <input id="repeatThreats" type="text" class="form-control" [(ngModel)]="issueData.repeatThreats">-->
-<!--      </div>-->
-
       <div class="form-group mt-2">
         <label for="notes">Notes:</label>
         <textarea id="notes" class="form-control" rows="3" [(ngModel)]="issueData.notes"></textarea>
       </div>
 
       <div class="form-group mt-2">
-        <label for="FixDeadline">Fix Deadline:</label>
+        <label for="fixDeadline">Fix Deadline:</label>
         <input id="fixDeadline" type="datetime-local" class="form-control" [(ngModel)]="issueData.fixDeadline">
       </div>
 
@@ -159,9 +150,9 @@
     </div>
   </div>
 
+  <!-- PDF Preview -->
   <div class="d-flex justify-content-end my-4">
     <button class="btn btn-secondary" (click)="previewPdf()">👁️ Preview PDF</button>
-<!--    <button class="btn-download-pdf" (click)="downloadPdf()">📄 Download PDF Report</button>-->
+    <!-- <button class="btn-download-pdf" (click)="downloadPdf()">📄 Download PDF Report</button> -->
   </div>
-
 </div>
