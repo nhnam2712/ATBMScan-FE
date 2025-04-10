@@ -85,3 +85,19 @@ table.issues-table {
   transform: scale(1.2);
 }
 
+.btn-download-pdf {
+  background-color: #dc3545; /* Đỏ cảnh báo */
+  color: #fff;
+  font-weight: 500;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 10px;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+.btn-download-pdf:hover {
+  background-color: #c82333;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.25);
+}

@@ -234,4 +234,16 @@ export class ScanResultsComponent {
       }
     });
   }
+
+  downloadPdf(): void {
+    this.scanService.downloadPdf(this.scanResultData.id).subscribe(blob => {
+      const link = document.createElement('a');
+      link.href = URL.createObjectURL(blob);
+      link.download = 'scan-report.pdf';
+      link.click();
+      URL.revokeObjectURL(link.href);
+    }, error => {
+      console.error("Download PDF failed", error);
+    });
+  }
 }
