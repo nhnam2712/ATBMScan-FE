@@ -235,15 +235,25 @@ export class ScanResultsComponent {
     });
   }
 
-  downloadPdf(): void {
-    this.scanService.downloadPdf(this.scanResultData.id).subscribe(blob => {
-      const link = document.createElement('a');
-      link.href = URL.createObjectURL(blob);
-      link.download = 'scan-report.pdf';
-      link.click();
-      URL.revokeObjectURL(link.href);
-    }, error => {
-      console.error("Download PDF failed", error);
+  // downloadPdf(): void {
+  //   this.scanService.downloadPdf(this.scanResultData.id).subscribe(blob => {
+  //     const link = document.createElement('a');
+  //     link.href = URL.createObjectURL(blob);
+  //     link.download = 'scan-report.pdf';
+  //     link.click();
+  //     URL.revokeObjectURL(link.href);
+  //   }, error => {
+  //     console.error("Download PDF failed", error);
+  //   });
+  // }
+
+  previewPdf() {
+    this.scanService.previewPdf(this.scanResultId).subscribe((blob: Blob) => {
+      const fileURL = URL.createObjectURL(blob);
+      window.open(fileURL, '_blank');
+    }, (error: any) => {
+      console.error("Preview PDF failed", error);
+      alert("Failed to preview PDF.");
     });
   }
 }

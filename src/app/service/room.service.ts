@@ -256,13 +256,23 @@ getAllUsers() {
     });
   }
 
-  downloadPdf(scanResultId: string): Observable<Blob> {
+  // downloadPdf(scanResultId: string): Observable<Blob> {
+  //   const token = localStorage.getItem('token');
+  //   const headers = new HttpHeaders({ Authorization: `Bearer ${token}` });
+  //
+  //   return this.http.get(`${this.apiEndPoint}report/${scanResultId}`, {
+  //     headers,
+  //     responseType: 'blob' // Important for file downloads
+  //   });
+  // }
+
+  previewPdf(scanResultId: string): any {
     const token = localStorage.getItem('token');
     const headers = new HttpHeaders({ Authorization: `Bearer ${token}` });
 
     return this.http.get(`${this.apiEndPoint}report/${scanResultId}`, {
       headers,
-      responseType: 'blob' // Important for file downloads
+      responseType: 'blob'
     });
   }
 }
