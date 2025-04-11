@@ -46,7 +46,7 @@ export class ScanResultsComponent {
     if (this.bookingId) {
       this.fetchBookingDetails(this.bookingId);
       this.fetchScanResult(this.bookingId);
-      this.fetchIssuesData(this.scanResultId);
+      // this.fetchIssuesData(this.scanResultId);
     } else {
       this.errorMessage = 'Booking ID not found in localStorage.';
       this.isLoading = false;
@@ -96,11 +96,11 @@ export class ScanResultsComponent {
         this.scanResultData = data;
 
         if (data && data.id) {
-          this.scanResultId = data.id;
+          this.scanResultId = data.id; // Gán vào biến
           localStorage.setItem('ScanResultId', data.id);
           console.log("ScanResultId saved:", data.id);
 
-          // ✅ NOW call fetchIssuesData with the correct ID
+          // ✅ Gọi fetchIssuesData ngay sau khi có scanResultId
           this.fetchIssuesData(this.scanResultId);
         } else {
           console.warn("No scanResultId found in response");
@@ -108,7 +108,7 @@ export class ScanResultsComponent {
       },
       error: (error) => {
         console.error('Error fetching scan results:', error);
-        this.errorMessage = 'ScanResult is empty.';
+        this.errorMessage = 'Failed to fetch scan results.';
       }
     });
   }
