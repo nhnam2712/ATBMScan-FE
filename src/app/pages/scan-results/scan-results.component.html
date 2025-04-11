@@ -71,9 +71,9 @@
               <span [ngClass]="{ 'text-danger': isExpired(issue.fixDeadline), 'text-success': !isExpired(issue.fixDeadline) }">
                 {{ issue.fixed ? 'DONE' : (issue.fixDeadline ? (issue.fixDeadline | date: 'short') : 'N/A') }}
               </span>
-            <span *ngIf="isExpired(issue.fixDeadline)" class="badge bg-danger ms-2">Expired</span>
+            <span *ngIf="isExpired(issue.fixDeadline) && !issue.fixed" class="badge bg-danger ms-2">Expired</span>
 
-            <button *ngIf="isExpired(issue.fixDeadline) && userRole === 'ADMIN'"
+            <button *ngIf="isExpired(issue.fixDeadline) && !issue.fixed && userRole === 'ADMIN'"
                     class="btn btn-sm btn-outline-primary ms-2"
                     (click)="rescheduleIssue(issue)">
               Reschedule
