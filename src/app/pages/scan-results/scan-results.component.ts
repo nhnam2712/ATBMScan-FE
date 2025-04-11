@@ -92,19 +92,23 @@ export class ScanResultsComponent {
 
   fetchScanResult(bookingId: string) {
     this.scanService.getScanResults(bookingId).subscribe({
-      next: (data: any) => { // Ép kiểu về `any` để tránh lỗi TypeScript
+      next: (data: any) => {
         this.scanResultData = data;
 
         if (data && data.id) {
+          this.scanResultId = data.id;
           localStorage.setItem('ScanResultId', data.id);
           console.log("ScanResultId saved:", data.id);
+
+          // ✅ NOW call fetchIssuesData with the correct ID
+          this.fetchIssuesData(this.scanResultId);
         } else {
           console.warn("No scanResultId found in response");
         }
       },
       error: (error) => {
         console.error('Error fetching scan results:', error);
-        this.errorMessage = 'Failed to fetch scan results.';
+        this.errorMessage = 'ScanResult is empty.';
       }
     });
   }
