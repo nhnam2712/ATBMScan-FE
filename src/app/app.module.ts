@@ -16,6 +16,7 @@ import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http'
 import { RegisterComponent } from './pages/register/register.component';
 import {SoftwaresComponent} from './pages/softwares/softwares.component';
 import {ScanResultsComponent} from "./pages/scan-results/scan-results.component";
+import {ProfileComponent} from "./pages/profile/profile.component";
 
 @NgModule({ declarations: [
         AppComponent,
@@ -28,6 +29,7 @@ import {ScanResultsComponent} from "./pages/scan-results/scan-results.component"
         RegisterComponent,
         SoftwaresComponent,
         ScanResultsComponent,
+        ProfileComponent,
     ],
     bootstrap: [AppComponent],
   imports: [FormsModule,

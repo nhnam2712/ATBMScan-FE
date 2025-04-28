@@ -28,10 +28,16 @@
       <!-- Right-side Actions (Notifications & Logout) -->
       <div class="d-flex align-items-center">
 
-        <!-- User Info & Logout -->
-        <h6 class="text-white me-3">{{ loggedUserData?.userName }}</h6>
-        <button class="btn btn-danger shadow-sm" (click)="onLogoff()">Logout</button>
+        <!-- Profile Icon with Navigation -->
+        <a routerLink="/profile" class="text-white me-2">
+          <i class="fas fa-user-circle" style="font-size: 1.5rem;"></i>
+        </a>
 
+        <!-- User Info -->
+        <h6 class="text-white me-3">{{ loggedUserData?.userName }}</h6>
+
+        <!-- Logout Button -->
+        <button class="btn btn-danger shadow-sm" (click)="onLogoff()">Logout</button>
       </div>
     </div>
   </div>

@@ -50,7 +50,7 @@ export class UsersComponent implements OnInit {
 
     const updatedRole = this.updateUserForm.value.role;
 
-    this.roomSrv.updateUser(this.selectedUserId, updatedRole).subscribe({
+    this.roomSrv.updateUserRole(this.selectedUserId, updatedRole).subscribe({
       next: () => {
         alert('User role updated successfully!');
         this.getUsers(); // Refresh user list
