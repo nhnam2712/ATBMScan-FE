@@ -1,0 +1,66 @@
+/* Main container */
+.container {
+  max-width: 700px;
+  margin-top: 50px;
+}
+
+/* Card styling */
+.card {
+  background-color: #f8f9fa;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+}
+
+.card-body {
+  padding: 20px;
+}
+
+/* Header */
+h2 {
+  color: #343a40;
+  font-weight: bold;
+  margin-bottom: 30px;
+}
+
+/* Form labels and paragraphs */
+.form-label {
+  font-weight: bold;
+  color: #495057;
+}
+
+p {
+  color: #6c757d;
+  font-size: 1rem;
+  margin-top: 5px;
+}
+
+/* Button Styling */
+button {
+  background-color: #007bff;
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  font-size: 1rem;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+/* Edit button */
+.text-center {
+  margin-top: 20px;
+}
+
+/* Card title */
+.card-title {
+  font-size: 1.25rem;
+  font-weight: bold;
+  color: #343a40;
+  margin-bottom: 15px;
+}
+
+/* Spacing between form fields */
