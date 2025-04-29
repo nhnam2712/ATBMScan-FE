@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { RoomService } from "../../service/room.service"; // Dịch vụ lấy thông tin người dùng
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-profile',
@@ -13,7 +14,7 @@ export class ProfileComponent implements OnInit {
   passwordsDontMatch: boolean = false; // Error flag for password mismatch
   isEditing: boolean = false; // Biến kiểm tra chế độ chỉnh sửa
 
-  constructor(private userService: RoomService) {}
+  constructor(private userService: RoomService, private location: Location) {}
 
   ngOnInit(): void {
     const userId = localStorage.getItem('userId');
@@ -69,5 +70,9 @@ export class ProfileComponent implements OnInit {
     if (userId) {
       this.loadUserProfile(userId);  // Reload user profile
     }
+  }
+
+  navigateBack() {
+    this.location.back();
   }
 }

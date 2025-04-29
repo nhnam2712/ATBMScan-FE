@@ -1,66 +1,73 @@
-<div class="container mt-5">
-  <h2 class="text-center mb-4">Profile</h2>
+  <div class="container mt-5">
+    <h2 class="text-center mb-4">Profile</h2>
 
-  <div class="card shadow-sm">
-    <div class="card-body">
-      <h5 class="card-title">User Info</h5>
+    <!-- Back Button -->
+    <div class="mb-4">
+      <button class="btn btn-outline-secondary" (click)="navigateBack()">
+        ← Back
+      </button>
+    </div>
 
-      <!-- Display User Info -->
-      <div *ngIf="!isEditing">
-        <div class="mb-3">
-          <label class="form-label">ID</label>
-          <p>{{ loggedUserData?.id || 'No id available' }}</p>
-        </div>
-        <div class="mb-3">
-          <label class="form-label">Name</label>
-          <p>{{ loggedUserData?.name || 'No name available' }}</p>
-        </div>
-        <div class="mb-3">
-          <label class="form-label">Email</label>
-          <p>{{ loggedUserData?.email || 'No email available' }}</p>
-        </div>
-        <div class="mb-3">
-          <label class="form-label">Role</label>
-          <p>{{ loggedUserData?.roles || 'No role assigned' }}</p>
-        </div>
+    <div class="card shadow-sm">
+      <div class="card-body">
+        <h5 class="card-title">User Info</h5>
 
-        <!-- Edit Button -->
-        <div class="text-center mt-4">
-          <button class="btn btn-primary" (click)="onEditProfile()">Edit Profile</button>
-        </div>
-      </div>
+        <!-- Display User Info -->
+        <div *ngIf="!isEditing">
+          <div class="mb-3">
+            <label class="form-label">ID</label>
+            <p>{{ loggedUserData?.id || 'No id available' }}</p>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Name</label>
+            <p>{{ loggedUserData?.name || 'No name available' }}</p>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Email</label>
+            <p>{{ loggedUserData?.email || 'No email available' }}</p>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Role</label>
+            <p>{{ loggedUserData?.roles || 'No role assigned' }}</p>
+          </div>
 
-      <!-- Edit Form (Visible when editing) -->
-      <div *ngIf="isEditing">
-        <!-- Email Field -->
-        <div class="mb-3">
-          <label class="form-label">Email</label>
-          <input type="email" class="form-control" [(ngModel)]="loggedUserData.email" />
-        </div>
-
-        <!-- Password Field -->
-        <div class="mb-3">
-          <label class="form-label">Password</label>
-          <input type="password" class="form-control" [(ngModel)]="loggedUserData.password" />
+          <!-- Edit Button -->
+          <div class="text-center mt-4">
+            <button class="btn btn-primary" (click)="onEditProfile()">Edit Profile</button>
+          </div>
         </div>
 
-        <!-- Confirm Password Field -->
-        <div class="mb-3">
-          <label class="form-label">Confirm Password</label>
-          <input type="password" class="form-control" [(ngModel)]="confirmPassword" />
-        </div>
+        <!-- Edit Form (Visible when editing) -->
+        <div *ngIf="isEditing">
+          <!-- Email Field -->
+          <div class="mb-3">
+            <label class="form-label">Email</label>
+            <input type="email" class="form-control" [(ngModel)]="loggedUserData.email" />
+          </div>
 
-        <!-- Save Button with Password Match Check -->
-        <div class="text-center mt-4">
-          <button class="btn btn-success" (click)="onSaveProfile()">Save</button>
-          <button class="btn btn-secondary ms-2" (click)="onCancelEdit()">Cancel</button>
-        </div>
+          <!-- Password Field -->
+          <div class="mb-3">
+            <label class="form-label">Password</label>
+            <input type="password" class="form-control" />
+          </div>
 
-        <!-- Password Mismatch Error -->
-        <div *ngIf="passwordsDontMatch" class="text-danger text-center mt-2">
-          Passwords do not match. Please try again.
+          <!-- Confirm Password Field -->
+          <div class="mb-3">
+            <label class="form-label">Confirm Password</label>
+            <input type="password" class="form-control" [(ngModel)]="confirmPassword" />
+          </div>
+
+          <!-- Save Button with Password Match Check -->
+          <div class="text-center mt-4">
+            <button class="btn btn-success" (click)="onSaveProfile()">Save</button>
+            <button class="btn btn-secondary ms-2" (click)="onCancelEdit()">Cancel</button>
+          </div>
+
+          <!-- Password Mismatch Error -->
+          <div *ngIf="passwordsDontMatch" class="text-danger text-center mt-2">
+            Passwords do not match. Please try again.
+          </div>
         </div>
       </div>
     </div>
   </div>
-</div>
