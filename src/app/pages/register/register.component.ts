@@ -15,6 +15,9 @@ export class RegisterComponent {
   errorMessage: string = '';
   today: string = new Date().toISOString().split('T')[0]; // Restrict DOB to past dates
 
+  // Hardcoded departments (same as enum in backend)
+  departments: string[] = ['IT', 'HR', 'BA', 'DE', 'PM'];
+
   constructor(private fb: FormBuilder, private authService: RoomService, private router: Router) {
     this.registerForm = this.fb.group({
       username: ['', [Validators.required, Validators.minLength(3)]],
@@ -22,6 +25,7 @@ export class RegisterComponent {
       name: ['', Validators.required],
       dob: ['', Validators.required],
       password: ['', [Validators.required, Validators.minLength(8)]],
+      department: ['', Validators.required],
     });
   }
 

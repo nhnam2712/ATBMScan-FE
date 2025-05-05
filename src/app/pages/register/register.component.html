@@ -53,6 +53,18 @@
           </small>
         </div>
 
+        <!-- Department -->
+        <div class="mb-3">
+          <label for="department" class="form-label">Department</label>
+          <select id="department" class="form-select" formControlName="department">
+            <option value="" disabled>Select Department</option>
+            <option *ngFor="let dept of departments" [value]="dept">{{ dept }}</option>
+          </select>
+          <small class="text-danger" *ngIf="registerForm.get('department')?.invalid && registerForm.get('department')?.touched">
+            Department is required.
+          </small>
+        </div>
+
         <!-- Buttons -->
         <div class="d-flex justify-content-between">
           <button type="submit" class="btn btn-primary" [disabled]="registerForm.invalid">Register</button>

@@ -8,6 +8,7 @@
      <th>User Name</th>
      <th>Email</th>
      <th>Role</th>
+     <th>Department</th>
      <th>Action</th>
    </tr>
    </thead>
@@ -17,6 +18,7 @@
      <td>{{ cust.username }}</td>
      <td>{{ cust.email }}</td>
      <td>{{ cust.roles }}</td>
+     <td>{{ cust.department }}</td>
      <td class="text-center">
        <button class="btn btn-sm btn-success me-2" (click)="onEditUser(cust)">Edit Role</button>
        <button class="btn btn-sm btn-danger" (click)="onDelete(cust.id)">Remove</button>
@@ -50,4 +52,5 @@
       </div>
     </div>
   </div>
+</div>
 </div>
