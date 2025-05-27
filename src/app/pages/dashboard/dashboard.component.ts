@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-dashboard',
@@ -7,21 +8,28 @@ import { Component } from '@angular/core';
     standalone: false
 })
 export class DashboardComponent {
+  constructor(private router: Router) {}
+
   dashboardItems = [
     {
       id: 1,
       title: 'Bookings',
       description: 'Manage all bookings in one place.',
+      path: '/bookings',
     },
     {
-      id: 3,
-      title: 'Reports',
-      description: 'Generate and view detailed reports.',
+      id: 2,
+      title: 'Software',
+      description: 'Manage all softwares in one place.',
+      path: '/softwares',
     },
   ];
 
   onCardAction(item: any) {
-    alert(`You selected: ${item.title}`);
-    console.log('Card Action:', item);
+    if (item.path) {
+      this.router.navigate([item.path]);
+    } else {
+      alert(`You selected: ${item.title}`);
+    }
   }
 }
