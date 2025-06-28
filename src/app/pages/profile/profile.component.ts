@@ -10,6 +10,7 @@ import { Location } from '@angular/common';
 })
 export class ProfileComponent implements OnInit {
   loggedUserData: any = {}; // Ensure user data is initialized
+  newPassword: string = '';
   confirmPassword: string = ''; // The confirm password field
   passwordsDontMatch: boolean = false; // Error flag for password mismatch
   isEditing: boolean = false; // Biến kiểm tra chế độ chỉnh sửa
@@ -41,21 +42,25 @@ export class ProfileComponent implements OnInit {
   }
 
   onSaveProfile(): void {
-    // Check if password and confirm password match
-    if (this.loggedUserData.password !== this.confirmPassword) {
-      this.passwordsDontMatch = true; // Show error message
-      return;
-    } else {
-      this.passwordsDontMatch = false; // Clear error message
+    // Nếu người dùng điền mật khẩu mới thì kiểm tra xác nhận
+    if (this.newPassword || this.confirmPassword) {
+      if (this.newPassword !== this.confirmPassword) {
+        this.passwordsDontMatch = true;
+        return;
+      } else {
+        this.passwordsDontMatch = false;
+        this.loggedUserData.password = this.newPassword;
+      }
     }
 
-    // Proceed to update user data
     const userId = localStorage.getItem('userId');
-    if (userId && this.loggedUserData) {
+    if (userId) {
       this.userService.updateUser(userId, this.loggedUserData).subscribe(
         (response) => {
           console.log('Profile updated successfully:', response);
           this.isEditing = false;
+          this.newPassword = '';
+          this.confirmPassword = '';
         },
         (error) => {
           console.error('Error saving profile:', error);
